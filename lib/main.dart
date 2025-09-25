@@ -1,7 +1,6 @@
-// lib/main.dart
 import 'package:api_post_viewer/models/post_model.dart';
-import 'package:api_post_viewer/services/api_service.dart';
 import 'package:flutter/material.dart';
+import 'services/api_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'API Post Viewer',
+      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const PostListScreen(),
     );
@@ -42,9 +40,7 @@ class _PostListScreenState extends State<PostListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Posts from API'),
-      ),
+      appBar: AppBar(title: const Text('Posts from API')),
       body: FutureBuilder<List<Post>>(
         future: _futurePosts,
         builder: (context, snapshot) {
@@ -58,13 +54,24 @@ class _PostListScreenState extends State<PostListScreen> {
               itemBuilder: (context, index) {
                 Post post = snapshot.data![index];
                 return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 16,
+                  ),
                   elevation: 4,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          'User ID: ${post.userId}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
                         Text(
                           '${post.id}. ${post.title}',
                           style: const TextStyle(
